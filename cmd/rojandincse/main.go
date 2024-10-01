@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 )
 
+const templateDir = "templates"
+
 var (
 	port = envOrDefault("PORT", "8080")
 )
@@ -22,7 +24,7 @@ func main() {
 
 func handleIndex(w http.ResponseWriter, r *http.Request) {
 	file := "index.html"
-	t, err := template.ParseFiles(filepath.Join("public", file))
+	t, err := template.ParseFiles(filepath.Join(templateDir, file))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		log.Printf("Error parsing template %s: %v", file, err)
@@ -36,7 +38,7 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 
 func handleBlog(w http.ResponseWriter, r *http.Request) {
 	file := "blog.html"
-	t, err := template.ParseFiles(filepath.Join("public", file))
+	t, err := template.ParseFiles(filepath.Join(templateDir, file))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		log.Printf("Error parsing template %s: %v", file, err)
