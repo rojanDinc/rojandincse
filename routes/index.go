@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 )
 
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, filepath.Join("public", "index.html"))
+func IndexHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, filepath.Join("templates", "index.html"))
+	})
 }
