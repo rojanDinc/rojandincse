@@ -1,6 +1,8 @@
 package routes
 
-import "net/http"
+import (
+	"net/http"
+)
 
 type Routes struct {
 	mux *http.ServeMux
@@ -19,4 +21,5 @@ func (r *Routes) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 
 func (r *Routes) setup() {
 	r.mux.Handle("/", IndexHandler())
+	r.mux.Handle("/blog/{$}", BlogHandler())
 }
