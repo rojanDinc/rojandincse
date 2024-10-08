@@ -9,7 +9,13 @@
 
 <body>
   <h1>Blog</h1>
-
+  <ul>
+    {{- range .Posts }}
+    <li>
+      <a href="post/{{ . }}">{{ . }}</a>
+    </li>
+    {{- end }}
+  </ul>
 </body>
 
 <footer>
