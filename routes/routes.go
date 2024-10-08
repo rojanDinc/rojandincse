@@ -9,17 +9,21 @@ type Routes struct {
 }
 
 func NewRoutes() *Routes {
-	return &Routes{
+	routes := &Routes{
 		mux: http.NewServeMux(),
 	}
+
+	routes.setup()
+
+	return routes
 }
 
 func (r *Routes) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	r.setup()
 	r.mux.ServeHTTP(w, req)
 }
 
 func (r *Routes) setup() {
-	r.mux.Handle("/", IndexHandler())
+	r.mux.Handle("/{$}", IndexHandler())
 	r.mux.Handle("/blog/{$}", BlogHandler())
+	r.mux.Handle("/post/{post}/{$}", PostHandler())
 }

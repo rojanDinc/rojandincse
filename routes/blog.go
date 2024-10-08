@@ -14,7 +14,7 @@ type BlogPage struct {
 
 func BlogHandler() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		postPaths, err := filepath.Glob("posts/*.md")
+		postPaths, err := filepath.Glob(filepath.Join("posts", "*.md"))
 		if err != nil {
 			log.Println("failed to read posts: ", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
