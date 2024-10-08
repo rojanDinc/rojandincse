@@ -28,5 +28,5 @@ func (r *Routes) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 func (r *Routes) setup() {
 	r.mux.Handle("/{$}", IndexHandler())
 	r.mux.Handle("/blog/{$}", BlogHandler())
-	r.mux.Handle("/post/{post}/{$}", PostHandler())
+	r.mux.Handle("/post/{post}/{$}", PostHandler(r.template))
 }
