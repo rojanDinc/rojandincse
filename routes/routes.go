@@ -1,16 +1,19 @@
 package routes
 
 import (
+	"html/template"
 	"net/http"
 )
 
 type Routes struct {
-	mux *http.ServeMux
+	template *template.Template
+	mux      *http.ServeMux
 }
 
 func NewRoutes() *Routes {
 	routes := &Routes{
-		mux: http.NewServeMux(),
+		template: template.Must(template.ParseGlob("templates/*.html")),
+		mux:      http.NewServeMux(),
 	}
 
 	routes.setup()
