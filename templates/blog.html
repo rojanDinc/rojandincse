@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog</title>
+</head>
+
+<body>
+  <h1>Blog</h1>
+  <ul>
+    {{- range .Posts }}
+    <li>
+      <a href="/post/{{ . }}">{{ . }}</a>
+    </li>
+    {{- end }}
+  </ul>
+</body>
+
+<footer>
+  <div class="row">
+    <div class="col">
+      <div class="d-flex justify-content-center my-5">&copy; 2024 rojandinc.se</div>
+    </div>
+  </div>
+</footer>
+
+</html>
