@@ -3,7 +3,6 @@ package routes
 import (
 	"html/template"
 	"net/http"
-	"path/filepath"
 )
 
 type Routes struct {
@@ -30,5 +29,5 @@ func (r *Routes) setup() {
 	r.mux.Handle("/{$}", IndexHandler(r.template))
 	r.mux.Handle("/blog/{$}", BlogHandler(r.template))
 	r.mux.Handle("/post/{post}/{$}", PostHandler(r.template))
-	r.mux.Handle("/static", http.FileServer(http.Dir(filepath.Join("..", "..", "static"))))
+	r.mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 }
