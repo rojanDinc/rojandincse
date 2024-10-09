@@ -1,4 +1,25 @@
 <body class="container">
+  <nav class="navbar bg-body-tertiary mb-5">
+    <div class="container px-4 py-1">
+      <a class="navbar-brand font-bold text-3xl" href="/">Rojan Dinc</a>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#responsive-navbar-nav"
+        aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
+        class="navbar-toggler">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse" id="responsive-navbar-nav">
+        <div class="me-auto navbar-nav">
+          <a aria-current="page" class="nav-link" href="/">Home</a>
+        </div>
+        <div class="me-auto navbar-nav">
+          <a class="nav-link" href="/blog">Blog</a>
+        </div>
+        <div class="me-auto navbar-nav">
+          <a class="nav-link" href="/contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
   {{- block "content" . }}
   {{- end }}
 </body>
