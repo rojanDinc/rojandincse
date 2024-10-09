@@ -2,6 +2,7 @@ package routes
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -49,7 +50,7 @@ func PostHandler(t *template.Template) http.Handler {
 			return
 		}
 		postPage := PostPage{
-			Title:   postName,
+			Title:   fmt.Sprintf("Post - %s", postName),
 			Content: template.HTML(md),
 		}
 

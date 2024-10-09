@@ -1,12 +1,21 @@
 package routes
 
 import (
+	"html/template"
+	"log"
 	"net/http"
-	"path/filepath"
 )
 
-func IndexHandler() http.Handler {
+type IndexPage struct {
+	Title string
+}
+
+func IndexHandler(template *template.Template) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, filepath.Join("templates", "index.html"))
+		if err := template.ExecuteTemplate(w, "index.html", IndexPage{Title: "rojandinc.se"}); err != nil {
+			log.Println("failed to execute template: ", err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	})
 }

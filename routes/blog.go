@@ -9,10 +9,11 @@ import (
 )
 
 type BlogPage struct {
+	Title string
 	Posts []string
 }
 
-func BlogHandler() http.Handler {
+func BlogHandler(template *template.Template) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		postPaths, err := filepath.Glob(filepath.Join("posts", "*.md"))
 		if err != nil {
@@ -27,6 +28,7 @@ func BlogHandler() http.Handler {
 		}
 
 		blogPage := BlogPage{
+			Title: "blog",
 			Posts: make([]string, 0, len(posts)),
 		}
 
@@ -35,13 +37,7 @@ func BlogHandler() http.Handler {
 			blogPage.Posts = append(blogPage.Posts, s[0])
 		}
 
-		temp, err := template.ParseFiles(filepath.Join("templates", "blog.html"))
-		if err != nil {
-			log.Println("failed to parse template: ", err)
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		if err := temp.Execute(w, blogPage); err != nil {
+		if err := template.ExecuteTemplate(w, "blog.html", blogPage); err != nil {
 			log.Println("failed to execute template: ", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
