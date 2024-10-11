@@ -28,7 +28,7 @@ func BlogHandler(template *template.Template) http.Handler {
 		}
 
 		blogPage := BlogPage{
-			Title: "blog",
+			Title: "Blog",
 			Posts: make([]string, 0, len(posts)),
 		}
 
