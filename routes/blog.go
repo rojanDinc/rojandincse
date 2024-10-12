@@ -9,7 +9,7 @@ import (
 )
 
 type BlogPage struct {
-	Title string
+	PageMeta
 	Posts []string
 }
 
@@ -28,7 +28,11 @@ func BlogHandler(template *template.Template) http.Handler {
 		}
 
 		blogPage := BlogPage{
-			Title: "Blog",
+			PageMeta: PageMeta{
+				Title:       "Blog",
+				Description: "Blog posts",
+				Keywords:    "blog, posts",
+			},
 			Posts: make([]string, 0, len(posts)),
 		}
 

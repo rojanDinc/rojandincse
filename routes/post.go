@@ -15,7 +15,7 @@ import (
 )
 
 type PostPage struct {
-	Title   string
+	PageMeta
 	Content template.HTML
 }
 
@@ -49,8 +49,13 @@ func PostHandler(t *template.Template) http.Handler {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
 		postPage := PostPage{
-			Title:   fmt.Sprintf("Post - %s", postName),
+			PageMeta: PageMeta{
+				Title:       fmt.Sprintf("Post - %s", postName),
+				Description: fmt.Sprintf("A post where Rojan writes about %s", postName),
+				Keywords:    postName,
+			},
 			Content: template.HTML(md),
 		}
 
