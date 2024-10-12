@@ -1,6 +1,6 @@
 steps:
   - name: build-dry-run
-    image: woodpeckerci/plugin-docker-buildx
+    image: woodpeckerci/plugin-docker-buildx:v4.2.0
     settings:
       dry-run: true
       repo: registry-local.devops.svc.cluster.local/rojandincse
@@ -12,7 +12,7 @@ steps:
           exclude: main
 
   - name: publish
-    image: woodpeckerci/plugin-docker-buildx
+    image: woodpeckerci/plugin-docker-buildx:v4.2.0
     settings:
       repo: registry-local.devops.svc.cluster.local/rojandincse
       tags: git-${CI_COMMIT_SHA:0:4}
