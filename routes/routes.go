@@ -5,6 +5,12 @@ import (
 	"net/http"
 )
 
+type PageMeta struct {
+	Title       string
+	Description string
+	Keywords    string
+}
+
 type Routes struct {
 	template *template.Template
 	mux      *http.ServeMux
