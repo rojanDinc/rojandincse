@@ -33,7 +33,7 @@ spec:
         - name: {{ .Chart.Name }}
           env:
             - name: "PORT"
-              value: {{ .Values.service.port }}
+              value: "{{ .Values.service.port }}"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
