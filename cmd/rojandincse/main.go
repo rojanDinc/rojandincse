@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log/slog"
 	"net/http"
 	"os"
 	"rojandincse/routes"
@@ -11,6 +12,8 @@ var (
 )
 
 func main() {
+	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, nil)))
+
 	routes := routes.NewRoutes()
 	http.ListenAndServe(":"+port, routes)
 }

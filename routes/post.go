@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"html/template"
-	"log"
+	"log/slog"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -45,7 +45,7 @@ func PostHandler(t *template.Template) http.Handler {
 
 		md, err := markdownToHTML(gm, postPath)
 		if err != nil {
-			log.Println("failed to convert markdown to HTML: ", err)
+			slog.Error("failed to convert markdown to HTML", "error", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -60,7 +60,7 @@ func PostHandler(t *template.Template) http.Handler {
 		}
 
 		if err := t.ExecuteTemplate(w, "post.html", postPage); err != nil {
-			log.Println("failed to execute template: ", err)
+			slog.Error("failed to execute template", "error", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}

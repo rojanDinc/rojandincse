@@ -3,6 +3,7 @@ package routes
 import (
 	"html/template"
 	"net/http"
+	"rojandincse/middleware"
 )
 
 type PageMeta struct {
@@ -28,7 +29,7 @@ func NewRoutes() *Routes {
 }
 
 func (r *Routes) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	r.mux.ServeHTTP(w, req)
+	middleware.Logger(r.mux).ServeHTTP(w, req)
 }
 
 func (r *Routes) setup() {

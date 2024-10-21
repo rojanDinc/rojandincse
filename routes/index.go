@@ -2,7 +2,7 @@ package routes
 
 import (
 	"html/template"
-	"log"
+	"log/slog"
 	"net/http"
 )
 
@@ -20,7 +20,7 @@ func IndexHandler(template *template.Template) http.Handler {
 			},
 		}
 		if err := template.ExecuteTemplate(w, "index.html", ip); err != nil {
-			log.Println("failed to execute template: ", err)
+			slog.Error("failed to execute template", "error", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
