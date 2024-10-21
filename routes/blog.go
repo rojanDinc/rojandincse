@@ -2,7 +2,7 @@ package routes
 
 import (
 	"html/template"
-	"log"
+	"log/slog"
 	"net/http"
 	"path/filepath"
 	"strings"
@@ -17,7 +17,7 @@ func BlogHandler(template *template.Template) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		postPaths, err := filepath.Glob(filepath.Join("posts", "*.md"))
 		if err != nil {
-			log.Println("failed to read posts: ", err)
+			slog.Error("failed to read posts", "error", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -42,7 +42,7 @@ func BlogHandler(template *template.Template) http.Handler {
 		}
 
 		if err := template.ExecuteTemplate(w, "blog.html", blogPage); err != nil {
-			log.Println("failed to execute template: ", err)
+			slog.Error("failed to execute template", "error", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
