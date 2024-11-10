@@ -15,6 +15,10 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+    - host: rojandinc.se
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
 
 service:
   port: 80
