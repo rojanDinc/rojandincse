@@ -1,10 +1,14 @@
 package main
 
 import (
+	"fmt"
+	"html/template"
 	"log/slog"
 	"net/http"
 	"os"
 	"rojandincse/routes"
+
+	"github.com/Masterminds/sprig/v3"
 )
 
 var (
@@ -14,7 +18,13 @@ var (
 func main() {
 	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, nil)))
 
-	routes := routes.NewRoutes()
+	temp, err := template.New("base").Funcs(sprig.FuncMap()).ParseGlob("templates/*.html")
+	if err != nil {
+		slog.Error("something went wrong", "err", err.Error())
+	}
+
+	routes := routes.NewRoutes(temp)
+	slog.Info(fmt.Sprintf("started server on port: %s", port))
 	http.ListenAndServe(":"+port, routes)
 }
 
