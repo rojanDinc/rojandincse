@@ -1,4 +1,4 @@
-# Slog - Go's built-in Structured Logging
+# Slog - Go's built-in Structured Logger
 
 Structured logging has become a cornerstone of robust and maintainable applications. With the introduction of the `slog` package in Go 1.21, developers now have access to a powerful and flexible logging solution that addresses the limitations of the traditional `log` package. This guide talks briefly about `slog`, providing insights and examples.
 
@@ -74,4 +74,4 @@ func foo() {
 
 ## Conclusion
 
-The `slog` package represents a significant step forward in Go's logging ecosystem, offering developers a structured, flexible, and powerful tool for logging. By leveraging `slog`, you can build applications that are easier to debug, maintain, and scale. As the Go ecosystem continues to evolve, mastering `slog` will be an essential skill for any Go developer.
+The `slog` package is a step forward in Go's logging ecosystem, offering developers a structured, flexible and powerful tool for logging built-in to the standard library.
