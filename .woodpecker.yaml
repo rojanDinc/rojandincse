@@ -1,16 +1,4 @@
 steps:
-  - name: build-dry-run
-    image: woodpeckerci/plugin-docker-buildx:4.2.0
-    settings:
-      dry-run: true
-      repo: registry-local.devops.svc.cluster.local/rojandincse
-      tags: git-${CI_COMMIT_SHA:0:4}
-      dockerfile: Dockerfile
-    when:
-      - event: [pull_request]
-        branch:
-          exclude: main
-
   - name: publish
     image: woodpeckerci/plugin-docker-buildx:4.2.0
     settings:
@@ -23,7 +11,43 @@ steps:
           insecure = true
     when:
       - event: [push]
-        branch: [main]
+
+  - name: deploy-preview-env
+    image: pelotech/drone-helm3
+    settings:
+      mode: install
+      namespace: apps
+      chart: ./chart
+      release: "web-${CI_COMMIT_SOURCE_BRANCH}"
+      skip_tls_verify: true
+      values: 'image.tag=git-${CI_COMMIT_SHA:0:4},ingress.hosts[0].host=${CI_COMMIT_SOURCE_BRANCH}.rojandinc.se,ingress.annotations.external-dns\.alpha\.kubernetes\.io/hostname=${CI_COMMIT_SOURCE_BRANCH}.rojandinc.se'
+      values_files:
+        - "environment/preview.yaml"
+      api_server:
+        from_secret: api_server
+      kubernetes_token:
+        from_secret: kubernetes_token
+    depends_on: [publish]
+    when:
+      - event: [pull_request, push]
+        branch:
+          exclude: main
+
+  - name: deploy-preview-env
+    image: pelotech/drone-helm3
+    settings:
+      mode: uninstall
+      namespace: apps
+      release: "web-${CI_COMMIT_SOURCE_BRANCH}"
+      skip_tls_verify: true
+      api_server:
+        from_secret: api_server
+      kubernetes_token:
+        from_secret: kubernetes_token
+    when:
+      - event: [pull_request_closed]
+        branch:
+          exclude: main
 
   - name: deploy
     image: pelotech/drone-helm3
@@ -44,4 +68,3 @@ steps:
     when:
       - event: [push]
         branch: [main]
-
