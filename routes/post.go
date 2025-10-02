@@ -9,7 +9,9 @@ import (
 	"os"
 	"path/filepath"
 
+	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/yuin/goldmark"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/renderer/html"
 )
@@ -28,6 +30,12 @@ func PostHandler(t *template.Template) http.Handler {
 			extension.Table,
 			extension.Linkify,
 			extension.TaskList,
+			highlighting.NewHighlighting(
+				highlighting.WithStyle("github-dark"),
+				highlighting.WithFormatOptions(
+					chromahtml.WithLineNumbers(true),
+				),
+			),
 		),
 		goldmark.WithRendererOptions(
 			html.WithWriter(html.NewWriter()),

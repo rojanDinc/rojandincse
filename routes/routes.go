@@ -17,9 +17,9 @@ type Routes struct {
 	mux      *http.ServeMux
 }
 
-func NewRoutes() *Routes {
+func NewRoutes(template *template.Template) *Routes {
 	routes := &Routes{
-		template: template.Must(template.ParseGlob("templates/*.html")),
+		template: template,
 		mux:      http.NewServeMux(),
 	}
 
