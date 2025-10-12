@@ -10,7 +10,6 @@ steps:
       - event: [pull_request]
         branch:
           exclude: main
-
   - name: publish
     image: woodpeckerci/plugin-docker-buildx:4.2.0
     settings:
@@ -24,7 +23,6 @@ steps:
     when:
       - event: [push]
         branch: [main]
-
   - name: deploy
     image: pelotech/drone-helm3
     settings:
@@ -44,4 +42,3 @@ steps:
     when:
       - event: [push]
         branch: [main]
-
