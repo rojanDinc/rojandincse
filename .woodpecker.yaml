@@ -16,6 +16,10 @@ steps:
       repo: registry.devops/rojandincse
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
+      buildkit_config: |
+        [registry."registry.devops"]
+          http = true
+          insecure = true
     when:
       - event: [push]
         branch: [main]
