@@ -13,5 +13,6 @@ FROM scratch
 
 COPY --from=build /go/src/app/templates /templates
 COPY --from=build /go/src/app/static /static
+COPY --from=build /go/src/app/posts /posts
 COPY --from=build /go/src/app/website /website
 ENTRYPOINT ["/website"]
