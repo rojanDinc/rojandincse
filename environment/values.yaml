@@ -17,6 +17,9 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+env:
+  - name: PORT
+    value: "80"
 service:
   port: 80
 resources:
