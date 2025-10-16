@@ -1,7 +1,6 @@
 image:
-  repository: registry-local.devops.svc.cluster.local/rojandincse
+  repository: registry.devops/rojandincse
   tag: latest
-
 ingress:
   enabled: true
   className: nginx
@@ -9,7 +8,6 @@ ingress:
     external-dns.alpha.kubernetes.io/hostname: "www.rojandinc.se"
     external-dns.alpha.kubernetes.io/target: tunnel.rojandinc.se
     nginx.ingress.kubernetes.io/enable-global-auth: "false"
-
   hosts:
     - host: www.rojandinc.se
       paths:
@@ -19,25 +17,20 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-
 service:
   port: 80
-
 resources:
   requests:
     cpu: 10m
     memory: 64Mi
-
 autoscaling:
   enabled: false
-
 livenessProbe:
   httpGet:
     path: /healthz
     port: 80
   initialDelaySeconds: 3
   periodSeconds: 3
-
 readinessProbe:
   httpGet:
     path: /healthz

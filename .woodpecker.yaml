@@ -3,7 +3,7 @@ steps:
     image: woodpeckerci/plugin-docker-buildx:4.2.0
     settings:
       dry-run: true
-      repo: registry-local.devops.svc.cluster.local/rojandincse
+      repo: registry.devops/rojandincse
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
     when:
@@ -13,7 +13,7 @@ steps:
   - name: publish
     image: woodpeckerci/plugin-docker-buildx:4.2.0
     settings:
-      repo: registry.rojandinc.se/rojandincse
+      repo: registry.devops/rojandincse
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
     when:
@@ -24,8 +24,10 @@ steps:
     settings:
       mode: upgrade
       namespace: apps
-      chart: ./chart
-      release: web
+      release: rojandincse
+      add_repos: ["rojandinc=https://rojandinc.github.io/helm-charts"]
+      chart: rojandinc/web
+      chart_version: 0.2.0
       skip_tls_verify: true
       values: "image.tag=git-${CI_COMMIT_SHA:0:4}"
       values_files:
