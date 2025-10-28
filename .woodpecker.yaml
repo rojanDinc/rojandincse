@@ -3,7 +3,7 @@ steps:
     image: woodpeckerci/plugin-docker-buildx:4.2.0
     settings:
       dry-run: true
-      repo: registry.devops/rojandincse
+      repo: rojandincse
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
     when:
@@ -13,9 +13,13 @@ steps:
   - name: publish
     image: woodpeckerci/plugin-docker-buildx:4.2.0
     settings:
-      repo: registry.home/rojandincse
+      repo: rojandincse
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
+      logins:
+        - registry: https://registry.rojandinc.se
+          mirrors:
+            - registry.home
     when:
       - event: [push]
         branch: [main]
