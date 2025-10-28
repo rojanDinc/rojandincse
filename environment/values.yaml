@@ -1,5 +1,5 @@
 image:
-  repository: registry.devops/rojandincse
+  repository: registry.home/rojandincse
   tag: latest
 ingress:
   enabled: true

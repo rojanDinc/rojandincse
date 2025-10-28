@@ -13,13 +13,9 @@ steps:
   - name: publish
     image: woodpeckerci/plugin-docker-buildx:4.2.0
     settings:
-      repo: registry.devops/rojandincse
+      repo: registry.home/rojandincse
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
-      buildkit_config: |
-        [registry."registry.devops"]
-          http = true
-          insecure = true
     when:
       - event: [push]
         branch: [main]
