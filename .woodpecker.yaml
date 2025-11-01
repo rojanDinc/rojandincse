@@ -3,9 +3,16 @@ steps:
     image: woodpeckerci/plugin-kaniko:2.1.0
     settings:
       dry-run: true
-      repo: registry.home/rojandincse
+      repo: rojandincse
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
+    backend_options:
+      kubernetes:
+        resources:
+          requests:
+            cpu: 300m
+          limits:
+            cpu: 1000m
     when:
       - event: [pull_request]
         branch:
@@ -19,6 +26,13 @@ steps:
       dockerfile: Dockerfile
       registry: registry.rojandinc.se
       insecure: true
+    backend_options:
+      kubernetes:
+        resources:
+          requests:
+            cpu: 300m
+          limits:
+            cpu: 1000m
     when:
       - event: [push]
         branch: [main]
