@@ -17,8 +17,8 @@ steps:
       log-level: debug
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
-      registry: registry.rojandinc.se
-      insecure-registry: true
+      insecure-registry: registry.rojandinc.se
+      insecure: true
     when:
       - event: [push]
         branch: [main]
