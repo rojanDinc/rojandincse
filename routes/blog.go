@@ -9,8 +9,8 @@ import (
 )
 
 type FrontMatter struct {
-	Title       string `json:"title"`
-	PublishedAt string `json:"published_at"`
+	Title       string `yaml:"title"`
+	PublishedAt string `yaml:"published_at"`
 }
 
 type Post struct {

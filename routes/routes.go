@@ -10,6 +10,7 @@ type PageMeta struct {
 	Title       string
 	Description string
 	Keywords    string
+	FrontMatter
 }
 
 type Routes struct {
