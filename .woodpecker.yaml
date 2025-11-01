@@ -21,7 +21,6 @@ steps:
     image: woodpeckerci/plugin-kaniko:2.1.0
     settings:
       repo: rojandincse
-      log-level: debug
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
       registry: registry.rojandinc.se
