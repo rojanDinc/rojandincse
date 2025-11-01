@@ -8,9 +8,19 @@ import (
 	"strings"
 )
 
+type FrontMatter struct {
+	Title       string `json:"title"`
+	PublishedAt string `json:"published_at"`
+}
+
+type Post struct {
+	FrontMatter
+	Link string
+}
+
 type BlogPage struct {
 	PageMeta
-	Posts []string
+	Posts []Post
 }
 
 func BlogHandler(template *template.Template) http.Handler {
@@ -22,28 +32,32 @@ func BlogHandler(template *template.Template) http.Handler {
 			return
 		}
 
-		posts := make([]string, 0, len(postPaths))
-		for _, post := range postPaths {
-			posts = append(posts, filepath.Base(post))
-		}
-
 		blogPage := BlogPage{
 			PageMeta: PageMeta{
 				Title:       "Blog",
 				Description: "Blog posts",
 				Keywords:    "blog, posts",
 			},
-			Posts: make([]string, 0, len(posts)),
+			Posts: make([]Post, 0, len(postPaths)),
 		}
 
-		for _, post := range posts {
-			s := strings.Split(post, ".")
-			blogPage.Posts = append(blogPage.Posts, s[0])
+		for _, postPath := range postPaths {
+			link := strings.TrimSuffix(filepath.Base(postPath), ".md")
+			fm, err := extractFrontmatter(postPath)
+			if err != nil {
+				slog.Error("failed to extract frontmatter", "err", err.Error(), "file", postPath)
+				http.Error(w, "", http.StatusInternalServerError)
+				return
+			}
+			blogPage.Posts = append(blogPage.Posts, Post{
+				FrontMatter: *fm,
+				Link:        link,
+			})
 		}
 
 		if err := template.ExecuteTemplate(w, "blog.html", blogPage); err != nil {
 			slog.Error("failed to execute template", "error", err)
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			http.Error(w, "", http.StatusInternalServerError)
 			return
 		}
 	})
