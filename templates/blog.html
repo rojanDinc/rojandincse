@@ -6,7 +6,7 @@
 <ul>
   {{- range .Posts }}
   <li>
-    <a href="/post/{{ . }}">{{ printf "%s" . | replace "-" " " | title }}</a>
+    <a href="/post/{{ .Link }}">{{ printf "%s" .FrontMatter.Title }}</a>
   </li>
   {{- end }}
 </ul>
