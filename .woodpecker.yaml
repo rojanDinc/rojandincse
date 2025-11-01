@@ -1,6 +1,6 @@
 steps:
   - name: build-dry-run
-    image: woodpeckerci/plugin-docker-buildx:4.2.0
+    image: woodpeckerci/plugin-kaniko:2.1.0
     settings:
       dry-run: true
       repo: registry.home/rojandincse
@@ -11,15 +11,13 @@ steps:
         branch:
           exclude: main
   - name: publish
-    image: woodpeckerci/plugin-docker-buildx:4.2.0
+    image: woodpeckerci/plugin-kaniko:2.1.0
     settings:
       repo: registry.home/rojandincse
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
-      logins:
-        - registry: https://registry.rojandinc.se
-          mirrors:
-            - registry.home
+      registry: http://registry.rojandinc.se
+      insecure-registry: true
     when:
       - event: [push]
         branch: [main]
