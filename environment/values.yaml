@@ -7,6 +7,7 @@ ingress:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "www.rojandinc.se"
     external-dns.alpha.kubernetes.io/target: tunnel.rojandinc.se
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     nginx.ingress.kubernetes.io/enable-global-auth: "false"
   hosts:
     - host: www.rojandinc.se
@@ -17,6 +18,10 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+  tls:
+    - secretName: rojandinc-web-cert
+      hosts:
+        - www.rojandinc.se
 env:
   - name: PORT
     value: "80"
