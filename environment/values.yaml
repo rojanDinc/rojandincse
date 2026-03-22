@@ -10,9 +10,6 @@ ingress:
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     nginx.ingress.kubernetes.io/enable-global-auth: "false"
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
-    nginx.ingress.kubernetes.io/enable-owasp-modsecurity-crs: "true"
-    nginx.ingress.kubernetes.io/modsecurity-snippet: |
-      SecRuleEngine On
   hosts:
     - host: www.rojandinc.se
       paths:
