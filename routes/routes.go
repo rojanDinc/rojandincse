@@ -2,6 +2,7 @@ package routes
 
 import (
 	"html/template"
+	"log/slog"
 	"net/http"
 	"rojandincse/middleware"
 )
@@ -40,4 +41,27 @@ func (r *Routes) setup() {
 	r.mux.Handle("/healthz", HealthzHandler())
 	r.mux.Handle("/post/{post}/{$}", PostHandler(r.template))
 	r.mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	r.mux.Handle("/", NotFoundHandler(r.template))
+}
+
+type NotFoundPage struct {
+	PageMeta
+}
+
+func NotFoundHandler(template *template.Template) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotFound)
+		page := NotFoundPage{
+			PageMeta: PageMeta{
+				Title:       "404",
+				Description: "Page not found",
+				Keywords:    "",
+			},
+		}
+		if err := template.ExecuteTemplate(w, "404.html", page); err != nil {
+			slog.Error("failed to execute 404 template", "error", err)
+			http.Error(w, "", http.StatusInternalServerError)
+			return
+		}
+	}
 }
