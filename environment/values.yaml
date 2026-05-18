@@ -1,5 +1,5 @@
 image:
-  repository: registry.home/rojandincse
+  repository: registry.internal.rojandinc.se/rojandincse
   tag: latest
 ingress:
   enabled: true
@@ -31,7 +31,10 @@ service:
 resources:
   requests:
     cpu: 10m
-    memory: 64Mi
+    memory: 20Mi
+  limits:
+    cpu: 10m
+    memory: 20Mi
 autoscaling:
   enabled: false
 livenessProbe:
