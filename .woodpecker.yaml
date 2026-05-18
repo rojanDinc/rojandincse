@@ -23,7 +23,7 @@ steps:
       repo: rojandincse
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
-      registry: registry.rojandinc.se
+      registry: registry.internal.rojandinc.se
       insecure: true
     backend_options:
       kubernetes:
