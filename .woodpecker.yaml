@@ -10,11 +10,9 @@ steps:
       kubernetes:
         resources:
           requests:
-            cpu: 300m
-            memory: 700Mi
+            cpu: "1"
           limits:
-            cpu: 1000m
-            memory: 700Mi
+            cpu: "1"
     when:
       - event: pull_request
   - name: publish
@@ -24,16 +22,13 @@ steps:
       tags: git-${CI_COMMIT_SHA:0:4}
       dockerfile: Dockerfile
       registry: registry.internal.rojandinc.se
-      insecure: true
     backend_options:
       kubernetes:
         resources:
           requests:
-            cpu: 300m
-            memory: 700Mi
+            cpu: "1"
           limits:
-            cpu: 1000m
-            memory: 700Mi
+            cpu: "1"
     when:
       - event: [push]
         branch: [main]
