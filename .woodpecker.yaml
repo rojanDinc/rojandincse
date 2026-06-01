@@ -11,8 +11,10 @@ steps:
         resources:
           requests:
             cpu: "1"
+            memory: 700Mi
           limits:
             cpu: "1"
+            memory: 700Mi
     when:
       - event: pull_request
   - name: publish
@@ -27,8 +29,10 @@ steps:
         resources:
           requests:
             cpu: "1"
+            memory: 700Mi
           limits:
             cpu: "1"
+            memory: 700Mi
     when:
       - event: [push]
         branch: [main]
